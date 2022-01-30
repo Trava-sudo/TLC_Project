@@ -27,26 +27,44 @@ def create_and_fill_dbTable(dataframe, table_name, table_types):
     dataframe.to_sql(name = table_name, con = engine, if_exists = 'replace', index = False, chunksize = 80000)
     engine.dispose()
 
-def write_to_parquet(dataframe, folder_path, table_name):
-    if(os.path.exists(folder_path + table_name + ".parquet")==False):
+def write_to_parquet(dataframe, folder_path, table_name, condition):
+    if(condition==False):
         dataframe.to_parquet(folder_path + table_name +'.parquet', index = False)
-        condition = False
-        return condition
-    
-    
-def write_to_csv(dataframe, folder_path, table_name):
+
+def check_parquet_existance(path_to_file):
     if(os.path.exists(folder_path + table_name + ".csv")==False):
+        condition = False
+    if(os.path.exists(folder_path + table_name + ".csv")==True):
+        condition = True
+    return condition
+        
+def check_avro_existance(path_to_file):
+    if(os.path.exists(folder_path + table_name + ".csv")==False):
+        condition = False
+    if(os.path.exists(folder_path + table_name + ".csv")==True):
+        condition = True
+    return condition        
+        
+def check_csv_existance(path_to_file):
+    if(os.path.exists(folder_path + table_name + ".csv")==False):
+        condition = False
+    if(os.path.exists(folder_path + table_name + ".csv")==True):
+        condition = True
+    return condition
+    
+def write_to_csv(dataframe, folder_path, table_name, condition):
+    if(condition==False):
         col_labels_csv = dataframe.types
         dataframe.to_csv(folder_path + table_name + ".csv", header=col_labels_csv, index = False, chunksize= 30000)
-        condition = False
-        return condition
 
-def from_parquet_to_avro(file, folder_directory):
-    if(os.path.exists(folder_path + table_name + ".avro")==False):
+def from_parquet_to_avro(file, folder_directory, condition):
+    if(condition==False):
         df = spark.read.parquet(file + '.parquet')
         df.write.format("com.databricks.spark.avro").save(folder_directory + '/' + file)
-        condition = False
-        return condition
+
+        
+    
+
 
 
 
