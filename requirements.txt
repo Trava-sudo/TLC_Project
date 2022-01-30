@@ -1,0 +1,6 @@
+pymysql
+numpy
+pandas 
+sqlalchemy
+pandavro 
+pyspark
