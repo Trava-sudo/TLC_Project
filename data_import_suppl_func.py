@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 import os 
 from pyspark.sql import SparkSession
 
-spark = SparkSession.builder.getOrCreate()
+
 
     
             
@@ -58,6 +58,7 @@ def write_to_csv(dataframe, folder_path, table_name, condition):
 
 def from_parquet_to_avro(file, folder_directory, condition):
     if(condition==False):
+        spark = SparkSession.builder.getOrCreate()
         df = spark.read.parquet(file + '.parquet')
         df.write.format("com.databricks.spark.avro").save(folder_directory + '/' + file)
 
