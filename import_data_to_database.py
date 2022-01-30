@@ -16,37 +16,37 @@ from definition_of_const import *
 
 def import_and_write_function(name_tables, date):
     for i, item in enumerate (name_tables):
-    url = item + date.strftime("%Y-%m") + ".csv"
-    name_of_table = name_tables[i] + '_' + date.strftime("%Y-%m")
+        url = item + date.strftime("%Y-%m") + ".csv"
+        name_of_table = name_tables[i] + '_' + date.strftime("%Y-%m")
 ## Here the code checks if there is already a csv file in the working directory
 
 ### In case the file is already present the functions called are 
 ### just the ones to infer the types and to create the database from the file 
-    check_file_existance = check_csv_existance()
-    if (check_file_existance == True):
-        data = pd.DataFrame()
-        for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
-            data = pd.concat([data, chunk], ignore_index=True)
-         types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
-         create_and_fill_dbTable(data, name_of_table, types_table)
-    else:
-        data = pd.DataFrame()
-        for chunk in pd.read_csv(url, chunksize=300000):
-            data = pd.concat([data, chunk], ignore_index=True)
+        check_file_existance = check_csv_existance()
+        if (check_file_existance == True):
+            data = pd.DataFrame()
+            for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
+                data = pd.concat([data, chunk], ignore_index=True)
+            types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+            create_and_fill_dbTable(data, name_of_table, types_table)
+        else:
+            data = pd.DataFrame()
+            for chunk in pd.read_csv(url, chunksize=300000):
+                data = pd.concat([data, chunk], ignore_index=True)
 
 #### After having imported the data into a DataFrame the code extracts the columns names and types and add them to the elements of the 
 #### types_table_alter following the sintax of MySQL, since these will be used to execute the CREATE queries through this same code.
 
-        types_table = infer_types(dataframe = data, types_array_element = types_table_alter[i])
+            types_table = infer_types(dataframe = data, types_array_element = types_table_alter[i])
             
 ### Connection to the database and creation of the table. name_of_table will be similar to 'Yellow_Taxi_2021-01' so that inside the 
 ### SQLQueries files will be possible to iterate over all the tables for yellow taxis.
 
-        create_and_fill_dbTable(data, name_of_table, types_table)
+            create_and_fill_dbTable(data, name_of_table, types_table)
 
 ### If one decides to, here are colled the functions to write the data into parquet and csv files
 
-        write_to_csv(data, folder_path='/path/to/folder', name_of_table, check_file_existance)
+            write_to_csv(data, folder_path='/path/to/folder', name_of_table, check_file_existance)
 
 #### From here to the end the code reiterates the same process for data coreesponding to the datetime.date defined in the elif condition. These condition 
 #### where defined looking at the data: in 2013 green taxis's data were added to the yellow ones. In 2015 the for-hire vehicles were added. 
