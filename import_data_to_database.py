@@ -30,7 +30,7 @@ while current_date <= end_date:
 ## Here the code checks if there is already a csv file in the working directory
 
 ### In case there is already the functions called are just the ones to infer the types and to create the database from the  
-            check_file_existance = check_csv()
+            check_file_existance = check_csv_existance()
             if (check_file_existance== True):
                 data = pd.DataFrame()
                 for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
@@ -66,7 +66,7 @@ while current_date <= end_date:
         for i, item in enumerate (datasets_url[0:2]):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            check_file_existance = check_csv()
+            check_file_existance = check_csv_existance()
             if (check_file_existance == True):
                 data = pd.DataFrame()
                 for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
@@ -86,7 +86,7 @@ while current_date <= end_date:
         for i, item in enumerate (datasets_url[0:3]):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            check_file_existance = check_csv()
+            check_file_existance = check_csv_existance()
             if (check_file_existance == True):
                 data = pd.DataFrame()
                 for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
@@ -107,7 +107,7 @@ while current_date <= end_date:
         for i, item in enumerate (datasets_url[0:3]):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            check_file_existance = check_csv()
+            check_file_existance = check_csv_existance()
             if (check_file_existance == True):
                 data = pd.DataFrame()
                 for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
@@ -126,7 +126,7 @@ while current_date <= end_date:
         for i, item in enumerate (datasets_url):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            check_file_existance = check_csv()
+            check_file_existance = check_csv_existance()
             if (check_file_existance == True):
                 data = pd.DataFrame()
                 for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
