@@ -32,25 +32,24 @@ def write_to_parquet(dataframe, folder_path, table_name, condition):
         dataframe.to_parquet(folder_path + table_name +'.parquet', index = False)
 
 def check_parquet_existance(path_to_file):
-    if(os.path.exists(folder_path + table_name + ".csv")==False):
-        condition = False
-    if(os.path.exists(folder_path + table_name + ".csv")==True):
-        condition = True
-    return condition
+    if(not os.path.exists(folder_path + table_name + ".csv")):
+        return False
+    if(os.path.exists(folder_path + table_name + ".csv")):
+        return True
         
 def check_avro_existance(path_to_file):
-    if(os.path.exists(folder_path + table_name + ".csv")==False):
-        condition = False
-    if(os.path.exists(folder_path + table_name + ".csv")==True):
-        condition = True
-    return condition        
+    if(not os.path.exists(folder_path + table_name + ".csv")):
+        return False
+    if(os.path.exists(folder_path + table_name + ".csv")):
+        return True
+        
         
 def check_csv_existance(path_to_file):
-    if(os.path.exists(folder_path + table_name + ".csv")==False):
-        condition = False
-    if(os.path.exists(folder_path + table_name + ".csv")==True):
-        condition = True
-    return condition
+    if(not os.path.exists(folder_path + table_name + ".csv")):
+        return False
+    if(os.path.exists(folder_path + table_name + ".csv")):
+        return True
+ 
     
 def write_to_csv(dataframe, folder_path, table_name, condition):
     if(condition==False):
