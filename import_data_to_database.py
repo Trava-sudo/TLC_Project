@@ -27,24 +27,34 @@ while current_date <= end_date:
         for i, item in enumerate (datasets_url[0:1]):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
+## Here the code checks if there is already a csv file in the working directory
 
-            data = pd.DataFrame()
-            for chunk in pd.read_csv(url, chunksize=300000):
-                data = pd.concat([data, chunk], ignore_index=True)
+### In case there is already the functions called are just the ones to infer the types and to create the database from the  
+            check_file_existance = check_csv()
+            if (check_file_existance == True):
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+            else:
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(url, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
 
 #### After having imported the data into a DataFrame the code extracts the columns names and types and add them to the elements of the 
 #### types_table_alter following the sintax of MySQL, since these will be used to execute the CREATE queries through this same code.
 
-            types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
             
 ### Connection to the database and creation of the table. name_of_table will be similar to 'Yellow_Taxi_2021-01' so that inside the 
 ### SQLQueries files will be possible to iterate over all the tables for yellow taxis.
 
-            create_and_fill_dbTable(data, name_of_table, types_table)
+                create_and_fill_dbTable(data, name_of_table, types_table)
 
 ### If one decides to, here are colled the functions to write the data into parquet and csv files
 
-            is_csv_file = write_to_csv(data, folder_path='/path/to/folder', name_of_table)
+                write_to_csv(data, folder_path='/path/to/folder', name_of_table)
 
 #### From here to the end the code reiterates the same process for data coreesponding to the datetime.date defined in the elif condition. These condition 
 #### where defined looking at the data: in 2013 green taxis's data were added to the yellow ones. In 2015 the for-hire vehicles were added. 
@@ -56,45 +66,85 @@ while current_date <= end_date:
         for i, item in enumerate (datasets_url[0:2]):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            data = pd.DataFrame()
-            for chunk in pd.read_csv(url, chunksize=300000):
-                data = pd.concat([data, chunk], ignore_index=True)
-            types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
-            create_and_fill_dbTable(data, name_of_table, types_table)
-            is_csv_file = write_to_csv(data, folder_path='/path/to/folder', name_of_table)
+            check_file_existance = check_csv()
+            if (check_file_existance == True):
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+            else:
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(url, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
 
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+                write_to_csv(data, folder_path='/path/to/folder', name_of_table)
+                
     elif (current_date < dt.date(2019,1,1) and current_date >= dt.date(2015,8,1)):
         for i, item in enumerate (datasets_url[0:3]):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            data = pd.DataFrame()
-            for chunk in pd.read_csv(url, chunksize=300000):
-                data = pd.concat([data, chunk], ignore_index=True)
-            types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
-            create_and_fill_dbTable(data, name_of_table, types_table)
-            is_csv_file = write_to_csv(data, folder_path='/path/to/folder', name_of_table)
+            check_file_existance = check_csv()
+            if (check_file_existance == True):
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+            else:
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(url, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+                write_to_csv(data, folder_path='/path/to/folder', name_of_table)
+        
     elif (current_date < dt.date(2019,2,1) and current_date >= dt.date(2019,1,1)):
         datasets_url[2] = "https://nyc-tlc.s3.amazonaws.com/trip+data/fhv_tripdata_"   ## Redefinition of the URL for the for-hire vehicles as anticipated
         for i, item in enumerate (datasets_url[0:3]):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            data = pd.DataFrame()
-            for chunk in pd.read_csv(url, chunksize=300000):
-                data = pd.concat([data, chunk], ignore_index=True)
-            types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
-            create_and_fill_dbTable(data, name_of_table, types_table)
-            is_csv_file = write_to_csv(data, folder_path='/path/to/folder', name_of_table)
+            check_file_existance = check_csv()
+            if (check_file_existance == True):
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+            else:
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(url, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+                write_to_csv(data, folder_path='/path/to/folder', name_of_table)
     else:
         for i, item in enumerate (datasets_url):
             url = item + current_date.strftime("%Y-%m") + ".csv"
             name_of_table = datasets[i] + '_' + current_date.strftime("%Y-%m")
-            data = pd.DataFrame()
-            for chunk in pd.read_csv(url, chunksize=300000):
-                data = pd.concat([data, chunk], ignore_index=True)
-            types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
-            create_and_fill_dbTable(data, name_of_table, types_table)
-            is_csv_file = write_to_csv(data, folder_path='/path/to/folder', name_of_table)
+            check_file_existance = check_csv()
+            if (check_file_existance == True):
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+            else:
+                data = pd.DataFrame()
+                for chunk in pd.read_csv(url, chunksize=300000):
+                    data = pd.concat([data, chunk], ignore_index=True)
+
+                types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
+                create_and_fill_dbTable(data, name_of_table, types_table)
+                write_to_csv(data, folder_path='/path/to/folder', name_of_table)
     
     current_date += relativedelta(months=1)
+    
+   
+
 
 
