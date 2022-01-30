@@ -26,7 +26,8 @@ for j, name_piece in enumerate (datasets[0:2]):
         cur.execute(sql_query_lowest_single_trip_day)
         lowest_single_trip_day = cur.fetchall()
 
-
+### lowest_single_trip_day is an element such as: ((1,),(2,),(4,),(6,),(3,),(5,),(7,))
+        
         low_single_trip_overall.append(lowest_single_trip_day[0][0])
 
 
