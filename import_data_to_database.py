@@ -33,7 +33,7 @@ while current_date <= end_date:
             check_file_existance = check_csv()
             if (check_file_existance == True):
                 data = pd.DataFrame()
-                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
                     data = pd.concat([data, chunk], ignore_index=True)
                 types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
                 create_and_fill_dbTable(data, name_of_table, types_table)
@@ -69,7 +69,7 @@ while current_date <= end_date:
             check_file_existance = check_csv()
             if (check_file_existance == True):
                 data = pd.DataFrame()
-                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
                     data = pd.concat([data, chunk], ignore_index=True)
                 types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
                 create_and_fill_dbTable(data, name_of_table, types_table)
@@ -89,7 +89,7 @@ while current_date <= end_date:
             check_file_existance = check_csv()
             if (check_file_existance == True):
                 data = pd.DataFrame()
-                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
                     data = pd.concat([data, chunk], ignore_index=True)
                 types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
                 create_and_fill_dbTable(data, name_of_table, types_table)
@@ -110,7 +110,7 @@ while current_date <= end_date:
             check_file_existance = check_csv()
             if (check_file_existance == True):
                 data = pd.DataFrame()
-                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
                     data = pd.concat([data, chunk], ignore_index=True)
                 types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
                 create_and_fill_dbTable(data, name_of_table, types_table)
@@ -129,7 +129,7 @@ while current_date <= end_date:
             check_file_existance = check_csv()
             if (check_file_existance == True):
                 data = pd.DataFrame()
-                for chunk in pd.read_csv(path_to_file, chunksize=300000):
+                for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
                     data = pd.concat([data, chunk], ignore_index=True)
                 types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
                 create_and_fill_dbTable(data, name_of_table, types_table)
