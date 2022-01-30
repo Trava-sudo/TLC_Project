@@ -13,8 +13,8 @@ from data_import_suppl_func import *
 from definition_of_const import *
 
 ## definition of the function that imports the data and writes them if the file is not present
-
-def import_and_write_function(name_tables, date):
+path_to_file = 'path/to/working/directory'
+def import_and_write_function(name_tables, date, path_to_file):
     for i, item in enumerate (name_tables):
         url = item + date.strftime("%Y-%m") + ".csv"
         name_of_table = name_tables[i] + '_' + date.strftime("%Y-%m")
@@ -22,13 +22,16 @@ def import_and_write_function(name_tables, date):
 
 ### In case the file is already present the functions called are 
 ### just the ones to infer the types and to create the database from the file 
-        check_file_existance = check_csv_existance()
+        check_file_existance = check_csv_existance(path_to_file, name_of_table)
         if (check_file_existance == True):
             data = pd.DataFrame()
-            for chunk in pd.read_csv('path_to_file' + name_of_table, chunksize=300000):
+            for chunk in pd.read_csv(path_to_file + name_of_table, chunksize=300000):
                 data = pd.concat([data, chunk], ignore_index=True)
             types_table = infer_types(dataframe= data, types_array_element= types_table_alter[i])
             create_and_fill_dbTable(data, name_of_table, types_table)
+            
+## If there is not the file already the code import the data from the URL corresponding
+## to the file and then writes them into a new .csv file
         else:
             data = pd.DataFrame()
             for chunk in pd.read_csv(url, chunksize=300000):
