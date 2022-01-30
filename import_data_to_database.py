@@ -20,7 +20,8 @@ def import_and_write_function(name_tables, date):
     name_of_table = name_tables[i] + '_' + date.strftime("%Y-%m")
 ## Here the code checks if there is already a csv file in the working directory
 
-### In case there is already the functions called are just the ones to infer the types and to create the database from the  
+### In case the file is already present the functions called are 
+### just the ones to infer the types and to create the database from the file 
     check_file_existance = check_csv_existance()
     if (check_file_existance == True):
         data = pd.DataFrame()
@@ -31,7 +32,7 @@ def import_and_write_function(name_tables, date):
     else:
         data = pd.DataFrame()
         for chunk in pd.read_csv(url, chunksize=300000):
-        data = pd.concat([data, chunk], ignore_index=True)
+            data = pd.concat([data, chunk], ignore_index=True)
 
 #### After having imported the data into a DataFrame the code extracts the columns names and types and add them to the elements of the 
 #### types_table_alter following the sintax of MySQL, since these will be used to execute the CREATE queries through this same code.
