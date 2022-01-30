@@ -30,15 +30,23 @@ def create_and_fill_dbTable(dataframe, table_name, table_types):
 def write_to_parquet(dataframe, folder_path, table_name):
     if(os.path.exists(folder_path + table_name + ".parquet")==False):
         dataframe.to_parquet(folder_path + table_name +'.parquet', index = False)
-
+        condition = False
+        return condition
+    
+    
 def write_to_csv(dataframe, folder_path, table_name):
     if(os.path.exists(folder_path + table_name + ".csv")==False):
         col_labels_csv = dataframe.types
         dataframe.to_csv(folder_path + table_name + ".csv", header=col_labels_csv, index = False, chunksize= 30000)
+        condition = False
+        return condition
 
 def from_parquet_to_avro(file, folder_directory):
-    df = spark.read.parquet(file + '.parquet')
-    df.write.format("com.databricks.spark.avro").save(folder_directory + '/' + file)
+    if(os.path.exists(folder_path + table_name + ".avro")==False):
+        df = spark.read.parquet(file + '.parquet')
+        df.write.format("com.databricks.spark.avro").save(folder_directory + '/' + file)
+        condition = False
+        return condition
 
 
 
