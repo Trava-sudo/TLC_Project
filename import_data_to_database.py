@@ -86,7 +86,7 @@ while current_date <= end_date:
         import_and_write_function(datasets_url[0:3], current_date)
         
     else:
-        import_and_write_function(datasets_url[0:1], current_date)
+        import_and_write_function(datasets_url, current_date)
         
     
     current_date += relativedelta(months=1)
