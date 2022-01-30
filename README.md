@@ -1,6 +1,8 @@
 # TLC_Project
 
 "import_data_to_database.py":
+
+In this code the user has to modify the function import_and_write_function() to insert the directories where the user wants to work
  
  This code is used to import data from the TLC website directly into pandas' DataFrame, and then create databases with MySQL and fill them with said data.
   
